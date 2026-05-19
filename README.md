@@ -1,9 +1,9 @@
 # ♻️ Retech - Sistema de Gerenciamento de Descarte Tecnológico
 
 ## 📌 Sobre o Projeto
-O **Retech** é uma aplicação web focada na gestão do ciclo de vida de ativos de TI. Este projeto acadêmico nasceu da necessidade de aplicar boas práticas de gerenciamento de infraestrutura, garantindo que o fluxo de equipamentos — desde o inventário até o descarte ou redirecionamento — seja rastreável, seguro e organizado.
+O **Retech** é uma **aplicação desktop** focada na gestão do ciclo de vida de ativos de TI. Este projeto acadêmico nasceu da necessidade de aplicar boas práticas de gerenciamento de infraestrutura, garantindo que o fluxo de equipamentos — desde o inventário até o descarte ou redirecionamento — seja rastreável, seguro e organizado.
 
-A ferramenta foi idealizada para otimizar a rotina de suporte e a resolução de demandas relacionadas à substituição de peças, controle de sucata e envio de equipamentos para manutenção ou descarte ecológico.
+A ferramenta foi idealizada para otimizar a rotina de suporte e a resolução de demandas relacionadas à substituição de peças, controle de sucata e envio de equipamentos para manutenção ou descarte ecológico. Por ser um aplicativo instalado localmente, funciona sem depender de um navegador ou de conexão constante com a internet.
 
 ## ⚙️ Arquitetura e Funcionalidades
 
@@ -12,7 +12,7 @@ O sistema foi estruturado de forma modular, dividindo as responsabilidades em di
 ### 👤 1. Controle de Acesso e Usuários (CRUD)
 A segurança e a identificação de quem realiza as movimentações são fundamentais na gestão de ativos.
 * **Create:** Tela de cadastro de novos técnicos/usuários com validação para evitar CPFs duplicados.
-* **Read:** Sistema de login seguro que valida as credenciais e inicia a sessão no navegador.
+* **Read:** Sistema de login seguro que valida as credenciais e inicia a sessão no aplicativo.
 * **Update:** Painel "Meu Perfil", onde o usuário logado pode atualizar suas informações pessoais e alterar sua senha.
 * **Delete:** Opção de exclusão permanente da própria conta do sistema.
 * **Recuperação:** Fluxo "Esqueci minha senha" para redefinição segura de acesso.
@@ -31,10 +31,26 @@ O *core* do sistema, focado na movimentação e no fim do ciclo de vida dos ativ
 
 ## 💻 Tecnologias e Técnicas Utilizadas
 
-O Retech foi desenvolvido utilizando tecnologias front-end focadas em performance e excelente UI/UX, operando de forma autônoma sem a necessidade imediata de um back-end externo:
+O Retech é desenvolvido como um aplicativo desktop multiplataforma com **.NET MAUI**, com foco em performance e excelente UI/UX. O alvo principal é o **Windows**, mas a stack permite executar e testar também no **macOS (Mac Catalyst)**.
 
-* **HTML5:** Estruturação semântica e acessível.
-* **CSS3 (Glassmorphism):** Interface moderna com efeitos de desfoque (*backdrop-filter*), design totalmente responsivo e paleta de cores focada em usabilidade (Dark Mode nativo).
-* **JavaScript (Vanilla):** Manipulação fluida da DOM (*Document Object Model*) para renderização dinâmica de dados e tratamento de eventos em tempo real.
-* **Web Storage API:** Utilização intensiva de `localStorage` para persistência e manipulação de dados em formato JSON (simulando um banco de dados) e `sessionStorage` para o controle de rotas protegidas e sessões ativas.
-* **Notificações Customizadas (Toast):** Desenvolvimento de um sistema próprio de alertas visuais assíncronos, substituindo os pop-ups nativos do navegador para manter a consistência visual.
+* **C# / .NET:** Linguagem e plataforma base da aplicação, com a lógica de negócio organizada em camadas.
+* **.NET MAUI:** Framework de UI multiplataforma que constrói um único projeto para Windows e macOS, com componentes nativos de cada sistema.
+* **XAML:** Definição declarativa das telas e dos layouts, com data binding para atualização dinâmica das informações.
+* **Padrão MVVM:** Separação entre a camada visual (Views), o estado/lógica de apresentação (ViewModels) e os dados (Models), facilitando manutenção e testes.
+* **Persistência Local:** Armazenamento dos dados (usuários, inventário, histórico) em banco local no dispositivo — por exemplo SQLite — garantindo que as informações permaneçam disponíveis offline.
+* **Notificações Customizadas (Toast):** Sistema próprio de alertas visuais assíncronos, mantendo a consistência da interface em vez dos diálogos padrão do sistema operacional.
+
+## 🚀 Como Executar
+
+Pré-requisitos: [.NET SDK](https://dotnet.microsoft.com/download) com a workload do MAUI instalada (`dotnet workload install maui`).
+
+```bash
+# Restaurar dependências
+dotnet restore
+
+# Executar no Windows
+dotnet build -t:Run -f net8.0-windows10.0.19041.0
+
+# Executar no macOS (Mac Catalyst)
+dotnet build -t:Run -f net8.0-maccatalyst
+```
